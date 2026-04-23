@@ -1,0 +1,168 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNhN81Ktb3222C2lhjUv6cR",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/emilialarios/F12-Programacion/blob/main/Parcial2\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Kr-bdqV7vqzt",
+        "outputId": "cddf8809-b311-4142-db54-e68b96c35f45"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Datos cargados: 5\n",
+            "Usando datos de respaldo\n",
+            "Tormenta: 2024-05-03T12:00Z\n",
+            " kp: 5.0\n",
+            " kp: 5.33\n",
+            " kp: 4.67\n",
+            " kp: 3.33\n",
+            "Tormenta: 2024-05-05T06:00Z\n",
+            " kp: 5.67\n",
+            " kp: 6.0\n",
+            " kp: 5.33\n",
+            " kp: 4.0\n",
+            " kp: 3.67\n",
+            "Tormenta: 2024-05-10T17:00Z\n",
+            " kp: 7.67\n",
+            " kp: 8.33\n",
+            " kp: 9.0\n",
+            " kp: 8.67\n",
+            " kp: 7.33\n",
+            " kp: 6.67\n",
+            " kp: 6.0\n",
+            " kp: 5.33\n",
+            "Tormenta: 2024-05-12T03:00Z\n",
+            " kp: 7.0\n",
+            " kp: 7.67\n",
+            " kp: 6.33\n",
+            " kp: 5.67\n",
+            " kp: 4.33\n",
+            "Tormenta: 2024-05-20T09:00Z\n",
+            " kp: 4.33\n",
+            " kp: 5.0\n",
+            " kp: 4.67\n",
+            " kp: 3.33\n",
+            "\n",
+            "Resultado final:\n",
+            "{'total': 26, 'max': 9.0, 'promedio': 5.781923076923078, 'conteo': {'G1': 7, 'G2': 4, 'G3': 4, 'G4': 2, 'G5': 1}}\n"
+          ]
+        }
+      ],
+      "source": [
+        "# Datos de respaldo (copia esto tal cual)\n",
+        "DATOS_RESPALDO = [{\"gstID\": \"2024-05-03T12:00:00-GST-001\", \"startTime\": \"2024-05-03T12:00Z\", \"allKpIndex\": [{\"observedTime\": \"2024-05-03T12:00Z\", \"kpIndex\": 5.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-03T15:00Z\", \"kpIndex\": 5.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-03T18:00Z\", \"kpIndex\": 4.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-03T21:00Z\", \"kpIndex\": 3.33, \"source\": \"NOAA\"}], \"linkedEvents\": [{\"activityID\": \"2024-05-01T18:25:00-CME-001\"}]}, {\"gstID\": \"2024-05-05T06:00:00-GST-001\", \"startTime\": \"2024-05-05T06:00Z\", \"allKpIndex\": [{\"observedTime\": \"2024-05-05T06:00Z\", \"kpIndex\": 5.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-05T09:00Z\", \"kpIndex\": 6.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-05T12:00Z\", \"kpIndex\": 5.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-05T15:00Z\", \"kpIndex\": 4.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-05T18:00Z\", \"kpIndex\": 3.67, \"source\": \"NOAA\"}], \"linkedEvents\": [{\"activityID\": \"2024-05-02T22:09:00-CME-001\"}]}, {\"gstID\": \"2024-05-10T17:00:00-GST-001\", \"startTime\": \"2024-05-10T17:00Z\", \"allKpIndex\": [{\"observedTime\": \"2024-05-10T18:00Z\", \"kpIndex\": 7.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-10T21:00Z\", \"kpIndex\": 8.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T00:00Z\", \"kpIndex\": 9.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T03:00Z\", \"kpIndex\": 8.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T06:00Z\", \"kpIndex\": 7.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T09:00Z\", \"kpIndex\": 6.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T12:00Z\", \"kpIndex\": 6.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-11T15:00Z\", \"kpIndex\": 5.33, \"source\": \"NOAA\"}], \"linkedEvents\": [{\"activityID\": \"2024-05-08T21:09:00-CME-001\"}, {\"activityID\": \"2024-05-09T17:24:00-CME-001\"}, {\"activityID\": \"2024-05-09T05:36:00-FLR-001\"}]}, {\"gstID\": \"2024-05-12T03:00:00-GST-001\", \"startTime\": \"2024-05-12T03:00Z\", \"allKpIndex\": [{\"observedTime\": \"2024-05-12T03:00Z\", \"kpIndex\": 7.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-12T06:00Z\", \"kpIndex\": 7.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-12T09:00Z\", \"kpIndex\": 6.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-12T12:00Z\", \"kpIndex\": 5.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-12T15:00Z\", \"kpIndex\": 4.33, \"source\": \"NOAA\"}], \"linkedEvents\": [{\"activityID\": \"2024-05-08T21:09:00-CME-001\"}, {\"activityID\": \"2024-05-09T17:24:00-CME-001\"}]}, {\"gstID\": \"2024-05-20T09:00:00-GST-001\", \"startTime\": \"2024-05-20T09:00Z\", \"allKpIndex\": [{\"observedTime\": \"2024-05-20T09:00Z\", \"kpIndex\": 4.33, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-20T12:00Z\", \"kpIndex\": 5.0, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-20T15:00Z\", \"kpIndex\": 4.67, \"source\": \"NOAA\"}, {\"observedTime\": \"2024-05-20T18:00Z\", \"kpIndex\": 3.33, \"source\": \"NOAA\"}], \"linkedEvents\": None}]\n",
+        "\n",
+        "print(\"Datos cargados:\", len(DATOS_RESPALDO))\n",
+        "\n",
+        "\n",
+        "# Función para obtener datos (simple)\n",
+        "def obtener_datos():\n",
+        "    print(\"Usando datos de respaldo\")\n",
+        "    return DATOS_RESPALDO\n",
+        "\n",
+        "\n",
+        "# Función para clasificar Kp\n",
+        "def clasificar(kp):\n",
+        "    if kp >= 9:\n",
+        "        return \"G5\"\n",
+        "    elif kp >= 8:\n",
+        "        return \"G4\"\n",
+        "    elif kp >= 7:\n",
+        "        return \"G3\"\n",
+        "    elif kp >= 6:\n",
+        "        return \"G2\"\n",
+        "    elif kp >= 5:\n",
+        "        return \"G1\"\n",
+        "    else:\n",
+        "        return \"Sin tormenta\"\n",
+        "\n",
+        "\n",
+        "# Mostrar datos (simple)\n",
+        "def mostrar(data):\n",
+        "    for t in data:\n",
+        "        print(\"Tormenta:\", t[\"startTime\"])\n",
+        "        for kp in t[\"allKpIndex\"]:\n",
+        "            print(\" kp:\", kp[\"kpIndex\"])\n",
+        "\n",
+        "\n",
+        "# Analizar datos\n",
+        "def analizar(data):\n",
+        "    total = 0\n",
+        "    max_kp = 0\n",
+        "    suma = 0\n",
+        "\n",
+        "    conteo = {\"G1\":0, \"G2\":0, \"G3\":0, \"G4\":0, \"G5\":0}\n",
+        "\n",
+        "    for t in data:\n",
+        "        for kp in t[\"allKpIndex\"]:\n",
+        "            valor = kp[\"kpIndex\"]\n",
+        "\n",
+        "            total = total + 1\n",
+        "            suma = suma + valor\n",
+        "\n",
+        "            if valor > max_kp:\n",
+        "                max_kp = valor\n",
+        "\n",
+        "            cat = clasificar(valor)\n",
+        "\n",
+        "            if cat in conteo:\n",
+        "                conteo[cat] = conteo[cat] + 1\n",
+        "\n",
+        "    if total > 0:\n",
+        "        promedio = suma / total\n",
+        "    else:\n",
+        "        promedio = 0\n",
+        "\n",
+        "    return {\n",
+        "        \"total\": total,\n",
+        "        \"max\": max_kp,\n",
+        "        \"promedio\": promedio,\n",
+        "        \"conteo\": conteo\n",
+        "    }\n",
+        "\n",
+        "\n",
+        "# Ejecutar todo\n",
+        "datos = obtener_datos()\n",
+        "\n",
+        "mostrar(datos)\n",
+        "\n",
+        "resultado = analizar(datos)\n",
+        "\n",
+        "print(\"\\nResultado final:\")\n",
+        "print(resultado)"
+      ]
+    }
+  ]
+}
